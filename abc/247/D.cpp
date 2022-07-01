@@ -4,45 +4,40 @@ using namespace std;
 int main() {
   int Q;
   cin >> Q;
-  vector<int> vec_x;
-  vector<int> vec_c;
+
+  vector<long long> queue_x;
+  vector<long long> queue_c;
 
   for(int i = 0; i < Q; i++) {
     int q_type;
-    int x, c;
-
     cin >> q_type;
 
     if (q_type == 1) {
+      long long x, c;
       cin >> x >> c;
-      vec_x.push_back(x);
-      vec_c.push_back(c);
+      queue_x.push_back(x);
+      queue_c.push_back(c);
     }
 
     if (q_type == 2) {
-      int ans = 0;
+      long long c;
       cin >> c;
 
-      int tmp_x = vec_x.at(0);
-      int tmp_c = vec_c.at(0);
+      long long ans = 0;
 
       while (c > 0) {
-        if (tmp_c - c > 0) {
-          tmp_c -= c;
-          ans += tmp_x * c;
-          c = 0;
-        } else {
-          ans += tmp_x * tmp_c;
-          vec_c.erase(vec_c.begin()+1);
-          vec_x.erase(vec_x.begin()+1);
-          c -= tmp_c;
-          int tmp_c = vec_c.at(0);
-          int tmp_x = vec_x.at(0);
+        int tmp_c = min(c, queue_c.at(0));
 
-          cout << tmp_x << endl;
-          cout << tmp_c << endl;
+        ans += queue_x.at(0) * tmp_c;
+        c -= tmp_c;
+        queue_c.at(0) -= tmp_c;
+
+        if (queue_c.at(0) <= 0) {
+          queue_x.erase(queue_x.begin(), queue_x.begin()+1);
+          queue_c.erase(queue_c.begin(), queue_c.begin()+1);
         }
       }
+
       cout << ans << endl;
     }
   }
