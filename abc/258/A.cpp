@@ -2,11 +2,11 @@
 using namespace std;
 
 int main() {
-  int N;
-  cin >> N;
-  vector<int> A(N);
+  int K;
+  cin >> K;
 
-  for (int i = 0; i < N; i++) {
-    cin >> A.at(i);
-  }
+  int H = (21 + (K / 60)) % 24;
+  int M = K % 60;
+
+  cout << setw(2) << setfill('0') << H << ":" << setw(2) << setfill('0') << M << endl;
 }
